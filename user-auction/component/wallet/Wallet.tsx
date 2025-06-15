@@ -54,7 +54,7 @@ export default function Wallet() {
 
         const fetchPendingItems = async () => {
             const token = await user.getIdToken();
-            const res = await fetch(`http://localhost:5000/won-items/pendingItem/${user.uid}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_APP_API_URL}/won-items/pendingItem/${user.uid}`, {
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${token}`
@@ -72,7 +72,7 @@ export default function Wallet() {
         const fetchWallet = async () => {
             const token = await user.getIdToken();
             try {
-                const dataWallet = await fetch(`http://localhost:5000/api/v1/wallet/${user.uid}`, {
+                const dataWallet = await fetch(`${process.env.NEXT_PUBLIC_APP_API_URL}/api/v1/wallet/${user.uid}`, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
@@ -86,7 +86,7 @@ export default function Wallet() {
                 const parseDataWallet = await dataWallet.json();
                 setWallet(parseDataWallet);
 
-                const dataTrans = await fetch(`http://localhost:5000/api/v1/wallet/transactions/${user.uid}`, {
+                const dataTrans = await fetch(`${process.env.NEXT_PUBLIC_APP_API_URL}/api/v1/wallet/transactions/${user.uid}`, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",

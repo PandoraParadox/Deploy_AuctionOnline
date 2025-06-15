@@ -67,7 +67,7 @@ export default function DetailAuction() {
 
     const getUser = async (uid: string) => {
         try {
-            const data = await fetch(`http://localhost:5000/api/v1/user/${uid}`, {
+            const data = await fetch(`${process.env.NEXT_PUBLIC_APP_API_URL}/api/v1/user/${uid}`, {
                 method: "GET",
                 headers:
                 {
@@ -182,7 +182,7 @@ export default function DetailAuction() {
                     setStatus(data.auction.status);
                     setHighestBid(data.auction.highest_bid || data.auction.startingPrice);
                     setBidHistory(data.bidHistory);
-                    setImageUrl(imagesArray.map((img: string) => `http://localhost:5000/uploads/${img}`));
+                    setImageUrl(imagesArray.map((img: string) => `${process.env.NEXT_PUBLIC_APP_API_URL}/uploads/${img}`));
                     setLoading(false);
                     console.log("Auction data received:", {
                         auctionTime: data.auction.auctionTime,
@@ -398,7 +398,7 @@ export default function DetailAuction() {
                     token,
                 })
             );
-            const data = await fetch(`http://localhost:5000/api/v1/wallet/transaction`, {
+            const data = await fetch(`${process.env.NEXT_PUBLIC_APP_API_URL}/api/v1/wallet/transaction`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

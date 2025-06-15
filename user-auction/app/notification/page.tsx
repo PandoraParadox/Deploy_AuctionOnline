@@ -16,7 +16,7 @@ export default function NotificationSection() {
     useEffect(() => {
         const fetchNotification = async () => {
             const token = await user?.getIdToken(true);
-            const data = await fetch(`http://localhost:5000/api/v1/notification/${user?.uid}`, {
+            const data = await fetch(`${process.env.NEXT_PUBLIC_APP_API_URL}/api/v1/notification/${user?.uid}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -73,7 +73,7 @@ export default function NotificationSection() {
         } : notif));
         try {
             const token = await user?.getIdToken(true);
-            const response = await fetch(`http://localhost:5000/api/v1/notification/markOneRead/${id}`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_APP_API_URL}/api/v1/notification/markOneRead/${id}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -93,7 +93,7 @@ export default function NotificationSection() {
         const deleteNotification = async () => {
             try {
                 const token = await user?.getIdToken(true);
-                const data = await fetch(`http://localhost:5000/api/v1/notification/clearAll/${user?.uid}`, {
+                const data = await fetch(`${process.env.NEXT_PUBLIC_APP_API_URL}/api/v1/notification/clearAll/${user?.uid}`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -121,7 +121,7 @@ export default function NotificationSection() {
         })));
         try {
             const token = await user?.getIdToken(true);
-            const response = await fetch(`http://localhost:5000/api/v1/notification/readAll/${user?.uid}`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_APP_API_URL}/api/v1/notification/readAll/${user?.uid}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

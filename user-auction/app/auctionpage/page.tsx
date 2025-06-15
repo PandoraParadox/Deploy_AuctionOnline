@@ -144,7 +144,7 @@ export default function AuctionPage() {
 
     const fetchProducts = async () => {
         try {
-            const response = await fetch("http://localhost:5000/api/v1/products", {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_APP_API_URL}/api/v1/products`, {
                 method: "GET",
                 headers: { "Content-Type": "application/json" },
                 cache: "no-store",
@@ -168,7 +168,7 @@ export default function AuctionPage() {
     };
     const fetchBidderCount = async (productId: number): Promise<number> => {
         try {
-            const response = await fetch(`http://localhost:5000/api/v1/bidder/${productId}`);
+            const response = await fetch(`${process.env.NEXT_PUBLIC_APP_API_URL}/api/v1/bidder/${productId}`);
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
@@ -244,7 +244,7 @@ export default function AuctionPage() {
         }
 
         try {
-            const response = await fetch(`http://localhost:5000/api/v1/search?query=${encodeURIComponent(context)}`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_APP_API_URL}/api/v1/search?query=${encodeURIComponent(context)}`, {
                 method: "GET",
                 headers: { "Content-Type": "application/json" },
                 cache: "no-store",

@@ -28,7 +28,7 @@ export const RegisterForm = () => {
                 showConfirmButton: false,
                 timer: 1500
             });
-            const data = await fetch('http://localhost:5000/api/v1/wallet', {
+            const data = await fetch(`${process.env.NEXT_PUBLIC_APP_API_URL}/api/v1/wallet`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

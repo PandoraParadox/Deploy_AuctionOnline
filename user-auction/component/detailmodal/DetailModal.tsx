@@ -45,7 +45,7 @@ export default function DetailModal({
 
         try {
             const token = await user.getIdToken();
-            const response = await fetch(`http://localhost:5000/won-items/received/${item.id}`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_APP_API_URL}/won-items/received/${item.id}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -87,7 +87,7 @@ export default function DetailModal({
                     return;
                 }
 
-                const detail = await fetch(`http://localhost:5000/won-items/payments/${item.id}`, {
+                const detail = await fetch(`${process.env.NEXT_PUBLIC_APP_API_URL}/won-items/payments/${item.id}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -131,7 +131,7 @@ export default function DetailModal({
                     <div className="md:grid grid-cols-12 gap-0">
                         <div className="col-span-5 md:h-[full] h-[80%] flex items-center justify-center">
                             <img
-                                src={item.image ? `http://localhost:5000/uploads/${itemDetail.image}` : "/fallback-image.jpg"}
+                                src={item.image ? `${process.env.NEXT_PUBLIC_APP_API_URL}/uploads/${itemDetail.image}` : "/fallback-image.jpg"}
                                 alt={item.name}
                                 className="md:w-full md:h-full w-[80%] h-[80%] object-cover "
                             />

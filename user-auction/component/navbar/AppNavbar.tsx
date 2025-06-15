@@ -118,7 +118,7 @@ export default function AppNavbar() {
 
             try {
                 const token = await authUser.getIdToken(true);
-                const response = await fetch(`http://localhost:5000/api/v1/notification/${authUser.uid}`, {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_APP_API_URL}/api/v1/notification/${authUser.uid}`, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",

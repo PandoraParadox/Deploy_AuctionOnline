@@ -38,7 +38,7 @@ export default function Items() {
             try {
                 setLoading(true);
                 const token = await user.getIdToken(true);
-                const response = await fetch(`http://localhost:5000/won-items/${user.uid}`, {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_APP_API_URL}/won-items/${user.uid}`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -128,7 +128,7 @@ export default function Items() {
                         >
                             <div className="w-full h-[45%] relative mb-2">
                                 <Image
-                                    src={item.image ? `http://localhost:5000/uploads/${item.image}` : "/fallback-image.jpg"}
+                                    src={item.image ? `${process.env.NEXT_PUBLIC_APP_API_URL}/uploads/${item.image}` : "/fallback-image.jpg"}
                                     width={200}
                                     height={200}
                                     alt={item.name}

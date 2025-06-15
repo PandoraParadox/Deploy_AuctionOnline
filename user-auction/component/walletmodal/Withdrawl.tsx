@@ -35,7 +35,7 @@ export default function WithdrawFunds({ onClose }: WalletModalProps) {
         const fetchWallet = async () => {
             const token = await user?.getIdToken(true);
             try {
-                const data = await fetch(`http://localhost:5000/api/v1/wallet/transaction`, {
+                const data = await fetch(`${process.env.NEXT_PUBLIC_APP_API_URL}/api/v1/wallet/transaction`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",

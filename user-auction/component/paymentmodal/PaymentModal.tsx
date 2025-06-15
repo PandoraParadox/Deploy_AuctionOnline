@@ -43,7 +43,7 @@ export default function PaymentModal({
                     if (!token) {
                         throw new Error('Invalid token');
                     }
-                    const response = await fetch(`http://localhost:5000/won-items/confirm/${item.productID}`, {
+                    const response = await fetch(`${process.env.NEXT_PUBLIC_APP_API_URL}/won-items/confirm/${item.productID}`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -106,7 +106,7 @@ export default function PaymentModal({
         const fetchWallet = async () => {
             const token = await user?.getIdToken(true);
             try {
-                const data = await fetch(`http://localhost:5000/api/v1/wallet/transaction`, {
+                const data = await fetch(`${process.env.NEXT_PUBLIC_APP_API_URL}/api/v1/wallet/transaction`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -153,7 +153,7 @@ export default function PaymentModal({
                 </button>
                 <div className="p-8">
                     <div className="flex items-center gap-4 mb-3">
-                        <img src={item.image ? `http://localhost:5000/uploads/${item.image}` : "/fallback-image.jpg"} alt={item.name} className="w-15 h-15 object-cover rounded-lg" />
+                        <img src={item.image ? `${process.env.NEXT_PUBLIC_APP_API_URL}/uploads/${item.image}` : "/fallback-image.jpg"} alt={item.name} className="w-15 h-15 object-cover rounded-lg" />
                         <div>
                             <h2 className="text-xl font-bold text-gray-800 mb-2">
                                 Complete Purchase

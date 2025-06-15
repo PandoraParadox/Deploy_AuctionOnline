@@ -62,7 +62,7 @@ export default function AddFunds({ onClose }: WalletModalProps) {
 
         try {
             const token = await user?.getIdToken(true);
-            const res = await fetch("http://localhost:5000/api/v1/vnpay", {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_APP_API_URL}/api/v1/vnpay`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -99,7 +99,7 @@ export default function AddFunds({ onClose }: WalletModalProps) {
         const timeoutId = setTimeout(() => controller.abort(), 10000);
         try {
             const token = await user?.getIdToken(true);
-            const res = await fetch(`http://localhost:5000/api/v1/vnpay/transaction_status/${txnRef}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_APP_API_URL}/api/v1/vnpay/transaction_status/${txnRef}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -119,7 +119,7 @@ export default function AddFunds({ onClose }: WalletModalProps) {
         const token = await user?.getIdToken(true);
         try {
 
-            const res = await fetch(`http://localhost:5000/api/v1/wallet/transaction`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_APP_API_URL}/api/v1/wallet/transaction`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -9,7 +9,7 @@ export async function GET(req: NextRequest, context: { params: Promise<{ filenam
     }
 
     try {
-        const imageUrl = `http://localhost:5000/uploads/${filename}`;
+        const imageUrl = `${process.env.NEXT_PUBLIC_APP_API_URL}/uploads/${filename}`;
         const response = await fetch(imageUrl);
 
         if (!response.ok) {

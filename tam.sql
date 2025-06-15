@@ -14,7 +14,24 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
--- Dumping data for table products.bid_history: ~86 rows (approximately)
+
+-- Dumping database structure for products
+CREATE DATABASE IF NOT EXISTS `products` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */;
+USE `products`;
+
+-- Dumping structure for table products.bid_history
+CREATE TABLE IF NOT EXISTS `bid_history` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_id` int(11) NOT NULL,
+  `user_id` char(28) NOT NULL,
+  `bid_amount` decimal(10,2) NOT NULL CHECK (`bid_amount` >= 0),
+  `bid_time` datetime NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`),
+  KEY `product_id` (`product_id`),
+  CONSTRAINT `bid_history_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=115 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Dumping data for table products.bid_history: ~114 rows (approximately)
 INSERT INTO `bid_history` (`id`, `product_id`, `user_id`, `bid_amount`, `bid_time`) VALUES
 	(1, 30, '5GYs7HKFgkPybUmK6KQ80mNBrZh1', 1413232.06, '2025-04-25 08:58:15'),
 	(2, 30, '5GYs7HKFgkPybUmK6KQ80mNBrZh1', 1413232.07, '2025-04-25 08:58:22'),
@@ -131,9 +148,35 @@ INSERT INTO `bid_history` (`id`, `product_id`, `user_id`, `bid_amount`, `bid_tim
 	(113, 3, '5GYs7HKFgkPybUmK6KQ80mNBrZh1', 5343244.00, '2025-05-28 03:47:27'),
 	(114, 39, '5GYs7HKFgkPybUmK6KQ80mNBrZh1', 8000000.00, '2025-05-28 07:11:23');
 
+-- Dumping structure for table products.notifications
+CREATE TABLE IF NOT EXISTS `notifications` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` char(28) NOT NULL,
+  `message` text DEFAULT NULL,
+  `type` enum('bid','auction','confirm','cancel') DEFAULT NULL,
+  `is_read` tinyint(1) DEFAULT 0,
+  `created_at` datetime DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 -- Dumping data for table products.notifications: ~0 rows (approximately)
 
--- Dumping data for table products.payments: ~14 rows (approximately)
+-- Dumping structure for table products.payments
+CREATE TABLE IF NOT EXISTS `payments` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` char(28) NOT NULL,
+  `won_item_id` int(11) NOT NULL,
+  `paid_at` datetime DEFAULT NULL,
+  `shipping_address` text DEFAULT NULL,
+  `phoneNumber` varchar(15) DEFAULT NULL,
+  `deliveredTime` datetime DEFAULT NULL,
+  `shipping_method` enum('Standard','Express','Pickup') DEFAULT 'Standard',
+  PRIMARY KEY (`id`),
+  KEY `won_item_id` (`won_item_id`),
+  CONSTRAINT `payments_ibfk_1` FOREIGN KEY (`won_item_id`) REFERENCES `won_items` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Dumping data for table products.payments: ~22 rows (approximately)
 INSERT INTO `payments` (`id`, `user_id`, `won_item_id`, `paid_at`, `shipping_address`, `phoneNumber`, `deliveredTime`, `shipping_method`) VALUES
 	(1, '5GYs7HKFgkPybUmK6KQ80mNBrZh1', 8, '2025-05-06 14:58:38', 'Hue, đà nẵng, vn', '0867797246', '2025-05-10 15:08:44', 'Standard'),
 	(2, '5GYs7HKFgkPybUmK6KQ80mNBrZh1', 7, '2025-05-06 15:08:44', 'Hue, đà nẵng, vn', '0867797246', '2025-05-10 15:08:44', 'Standard'),
@@ -158,7 +201,21 @@ INSERT INTO `payments` (`id`, `user_id`, `won_item_id`, `paid_at`, `shipping_add
 	(21, '5GYs7HKFgkPybUmK6KQ80mNBrZh1', 37, '2025-05-28 14:24:00', 'Da Nang, đà nẵng, xc', '0867797246', '2025-06-01 14:24:00', 'Pickup'),
 	(22, '5GYs7HKFgkPybUmK6KQ80mNBrZh1', 34, '2025-05-28 16:31:31', 'Hue, đà nẵng, xc', '0867797246', '2025-06-01 16:31:31', 'Standard');
 
--- Dumping data for table products.product: ~53 rows (approximately)
+-- Dumping structure for table products.product
+CREATE TABLE IF NOT EXISTS `product` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `startingPrice` decimal(10,2) NOT NULL,
+  `auctionTime` datetime NOT NULL,
+  `category` varchar(100) DEFAULT NULL,
+  `images` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`images`)),
+  `description` text DEFAULT NULL,
+  `highest_bid` decimal(10,2) DEFAULT NULL,
+  `highest_bidder_user` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Dumping data for table products.product: ~52 rows (approximately)
 INSERT INTO `product` (`id`, `name`, `startingPrice`, `auctionTime`, `category`, `images`, `description`, `highest_bid`, `highest_bidder_user`) VALUES
 	(1, 'Nike Off-White x Air Jordan 1 Retro High OG ‘Chicago’ ', 1212122.00, '2025-05-11 16:15:00', 'Sports Memorabilia', '["1744363469490_prod-3(1).png","1744363469490_prod-3(2).png","1744363469491_prod-3(3).png","1744363469492_prod-3(4).png"]', 'This elegant vintage wristwatch combines timeless design with precise Swiss craftsmanship, making it a standout accessory for any collection. The stainless steel case, paired with a genuine leather strap, showcases both durability and classic style. Perfectly functional and well-maintained, it offers both aesthetic appeal and everyday usability for watch enthusiasts.', 6212122.00, '5GYs7HKFgkPybUmK6KQ80mNBrZh1'),
 	(2, 'New Sacai x Nike LD Waffle Black White ', 123233.00, '2025-05-28 09:46:00', 'Sports Memorabilia', '["1744363613524_prod-4(1).png","1744363613547_prod-4(2).png","1744363613552_prod-4(3).png","1744363613558_prod-4(4).png"]', 'This elegant vintage wristwatch combines timeless design with precise Swiss craftsmanship, making it a standout accessory for any collection. The stainless steel case, paired with a genuine leather strap, showcases both durability and classic style. Perfectly functional and well-maintained, it offers both aesthetic appeal and everyday usability for watch enthusiasts.', 5123233.00, '5GYs7HKFgkPybUmK6KQ80mNBrZh1'),
@@ -213,7 +270,26 @@ INSERT INTO `product` (`id`, `name`, `startingPrice`, `auctionTime`, `category`,
 	(51, 'Achilles and Aias playing Pottery', 1000000.00, '2025-06-16 15:40:00', 'Real Estate', '["1748853882790_Pro-1(2).jpg","1748853882796_Pro-2(1).jpg","1748853882799_Pro-2(2).jpg","1748853882800_Pro-2(3).jpg"]', 'This elegant vintage wristwatch combines timeless design with precise Swiss craftsmanship, making it a standout accessory for any collection. The stainless steel case, paired with a genuine leather strap, showcases both durability and classic style. Perfectly functional and well-maintained, it offers both aesthetic appeal and everyday usability for watch enthusiasts.', 1000000.00, NULL),
 	(52, ' Geometric Art Pottery Greece', 5000000.00, '2025-06-17 15:45:00', 'Toys & Collectibles', '["1748853922985_Pro-11(3).jpg","1748853922986_Pro-12(1).jpg","1748853922992_Pro-12(2).jpg","1748853922993_Pro-12(3).jpg"]', 'This elegant vintage wristwatch combines timeless design with precise Swiss craftsmanship, making it a standout accessory for any collection. The stainless steel case, paired with a genuine leather strap, showcases both durability and classic style. Perfectly functional and well-maintained, it offers both aesthetic appeal and everyday usability for watch enthusiasts.', 5000000.00, NULL);
 
+-- Dumping structure for table products.reserved_bids
+CREATE TABLE IF NOT EXISTS `reserved_bids` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` varchar(255) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `reserved_amount` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_id` (`user_id`,`product_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 -- Dumping data for table products.reserved_bids: ~0 rows (approximately)
+
+-- Dumping structure for table products.transactions
+CREATE TABLE IF NOT EXISTS `transactions` (
+  `txn_ref` varchar(50) NOT NULL,
+  `createdate` varchar(14) NOT NULL,
+  `paydate` varchar(14) DEFAULT NULL,
+  `infor` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`txn_ref`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Dumping data for table products.transactions: ~24 rows (approximately)
 INSERT INTO `transactions` (`txn_ref`, `createdate`, `paydate`, `infor`) VALUES
@@ -242,6 +318,16 @@ INSERT INTO `transactions` (`txn_ref`, `createdate`, `paydate`, `infor`) VALUES
 	('UYXK1DVYA0', '20250526151225', '20250526151319', 'MQAL'),
 	('X71N4JIXV1', '20250525224410', '20250525224504', 'LQAAD');
 
+-- Dumping structure for table products.wallets
+CREATE TABLE IF NOT EXISTS `wallets` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` varchar(128) NOT NULL,
+  `balance` decimal(20,6) NOT NULL DEFAULT 0.000000,
+  `pending_bids` decimal(12,2) NOT NULL DEFAULT 0.00,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_id` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 -- Dumping data for table products.wallets: ~4 rows (approximately)
 INSERT INTO `wallets` (`id`, `user_id`, `balance`, `pending_bids`) VALUES
 	(1, '4USb5jsNK4Yxhh9CrWvZJh4widm1', 38489679.965500, 0.00),
@@ -249,7 +335,20 @@ INSERT INTO `wallets` (`id`, `user_id`, `balance`, `pending_bids`) VALUES
 	(4, 'Mzc7l8vZNfOlITmXFIWXAzyt6cW2', 0.000000, 0.00),
 	(5, 'QA82NKri6ZaugznfpMXUZmeie3y2', 0.000000, 0.00);
 
--- Dumping data for table products.wallet_transactions: ~119 rows (approximately)
+-- Dumping structure for table products.wallet_transactions
+CREATE TABLE IF NOT EXISTS `wallet_transactions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `wallet_id` int(11) NOT NULL,
+  `type` enum('Add Funds','Bids','Withdrawal','Confirm') NOT NULL,
+  `amount` decimal(12,2) NOT NULL,
+  `description` text DEFAULT NULL,
+  `created_at` datetime DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`),
+  KEY `wallet_id` (`wallet_id`),
+  CONSTRAINT `wallet_transactions_ibfk_1` FOREIGN KEY (`wallet_id`) REFERENCES `wallets` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=147 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Dumping data for table products.wallet_transactions: ~146 rows (approximately)
 INSERT INTO `wallet_transactions` (`id`, `wallet_id`, `type`, `amount`, `description`, `created_at`) VALUES
 	(1, 1, 'Bids', 1321322.06, 'Bidding item : Pie', '2025-05-09 14:19:02'),
 	(2, 1, 'Bids', 1321322.07, 'Bidding item : Pie', '2025-05-09 14:34:21'),
@@ -398,7 +497,22 @@ INSERT INTO `wallet_transactions` (`id`, `wallet_id`, `type`, `amount`, `descrip
 	(145, 2, 'Confirm', 5123233.00, 'Comfirm payment: New Sacai x Nike LD Waffle Black White ', '2025-05-28 14:24:00'),
 	(146, 2, 'Confirm', 30033252.00, 'Comfirm payment: Judith Leiber Precious Rose', '2025-05-28 16:31:31');
 
--- Dumping data for table products.won_items: ~31 rows (approximately)
+-- Dumping structure for table products.won_items
+CREATE TABLE IF NOT EXISTS `won_items` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` char(28) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `final_price` decimal(10,2) NOT NULL CHECK (`final_price` >= 0),
+  `status` enum('Pending','Delivered','Received','Cancel') DEFAULT 'Pending',
+  `won_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `created_at` datetime DEFAULT NULL,
+  `payment_due` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `product_id` (`product_id`),
+  CONSTRAINT `won_items_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Dumping data for table products.won_items: ~37 rows (approximately)
 INSERT INTO `won_items` (`id`, `user_id`, `product_id`, `final_price`, `status`, `won_at`, `created_at`, `payment_due`) VALUES
 	(1, '4USb5jsNK4Yxhh9CrWvZJh4widm1', 29, 1321322.00, 'Received', '2025-04-29 23:33:02', '2025-04-29 23:33:02', '2025-05-02 23:33:02'),
 	(2, '5GYs7HKFgkPybUmK6KQ80mNBrZh1', 30, 1213232.00, 'Received', '2025-04-29 23:33:02', '2025-04-29 23:33:02', '2025-05-02 23:33:02'),
