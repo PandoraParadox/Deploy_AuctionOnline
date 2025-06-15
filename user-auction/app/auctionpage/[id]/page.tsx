@@ -129,7 +129,7 @@ export default function DetailAuction() {
         }
 
         const connectWebSocket = () => {
-            const websocket = new WebSocket('ws://localhost:5000');
+            const websocket = new WebSocket('wss://auction-backend-c7q3.onrender.com');
             setWs(websocket);
 
             websocket.onopen = async () => {
