@@ -129,7 +129,7 @@ export default function DetailAuction() {
         }
 
         const connectWebSocket = () => {
-            const websocket = new WebSocket('ws://auction-backend-production-2602.up.railway.app');
+            const websocket = new WebSocket('wss://auction-backend-production-2602.up.railway.app');
             setWs(websocket);
 
             websocket.onopen = async () => {
