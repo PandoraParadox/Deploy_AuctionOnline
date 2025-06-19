@@ -29,7 +29,6 @@ export default function DetailLayout({
         <main
             className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
-            <AppNavbar />
             <div className=" mx-auto p-6 mt-12">{children}</div>
 
         </main>
