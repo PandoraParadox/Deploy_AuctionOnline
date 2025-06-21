@@ -160,7 +160,7 @@ export default function Auction() {
                     </div>
                 ) : (products.slice(0, 8).map((item: Product, index: number) => {
                     const images: string[] = Array.isArray(item.images) ? item.images : [];
-                    const imageUrl = images.length > 0 ? `/api/images/${images[0]}` : "/default-image.jpg";
+                    const imageUrl = images.length > 0 ? `${process.env.NEXT_PUBLIC_CLOUD_DOMAIN}/${process.env.NEXT_PUBLIC_CLOUD_NAME}/image/upload/${images[0]}.jpg` : "/default-image.jpg";
                     const status = getAuctionStatus(item.auctionTime);
                     const isComingSoon = status === "Coming Soon";
                     const isEnded = status === "End of Auction";
