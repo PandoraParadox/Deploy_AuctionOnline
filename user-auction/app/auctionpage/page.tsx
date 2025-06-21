@@ -299,7 +299,7 @@ export default function AuctionPage() {
                 {currentProducts.length === 0 ? (<div className="text-center w-full col-span-4 mx-auto text-2xl">No items found.</div>) : (
                     currentProducts.map((item: Product, index: number) => {
                         const images: string[] = Array.isArray(item.images) ? item.images : [];
-                        const imageUrl = images.length > 0 ? `/api/images/${images[0]}` : "/default-image.jpg";
+                        const imageUrl = images.length > 0 ? `${process.env.NEXT_PUBLIC_CLOUD_DOMAIN}/${process.env.NEXT_PUBLIC_CLOUD_NAME}/image/upload/${images[0]}.jpg` : "/default-image.jpg";
                         const status = getAuctionStatus(item.auctionTime);
                         const isComingSoon = status === "Coming Soon";
                         const isEnded = status === "End of Auction";
