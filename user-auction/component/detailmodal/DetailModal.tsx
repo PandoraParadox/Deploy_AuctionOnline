@@ -131,7 +131,7 @@ export default function DetailModal({
                     <div className="md:grid grid-cols-12 gap-0">
                         <div className="col-span-5 md:h-[full] h-[80%] flex items-center justify-center">
                             <img
-                                src={item.image ? `${process.env.NEXT_PUBLIC_CLOUD_DOMAIN}/${process.env.NEXT_PUBLIC_CLOUD_NAME}/image/upload/${item.image}.jpg` : "/fallback-image.jpg"}
+                                src={item.image ? `${process.env.NEXT_PUBLIC_CLOUD_DOMAIN}/${process.env.NEXT_PUBLIC_CLOUD_NAME}/image/upload/${itemDetail.image}.jpg` : "/fallback-image.jpg"}
                                 alt={item.name}
                                 className="md:w-full md:h-full w-[80%] h-[80%] object-cover "
                             />
