@@ -182,7 +182,7 @@ export default function DetailAuction() {
                     setStatus(data.auction.status);
                     setHighestBid(data.auction.highest_bid || data.auction.startingPrice);
                     setBidHistory(data.bidHistory);
-                    setImageUrl(imagesArray.map((img: string) => `${process.env.NEXT_PUBLIC_APP_API_URL}/uploads/${img}`));
+                    setImageUrl(imagesArray);
                     setLoading(false);
                     console.log("Auction data received:", {
                         auctionTime: data.auction.auctionTime,
@@ -458,7 +458,7 @@ export default function DetailAuction() {
                         <div className="bg-white rounded-xl shadow-sm overflow-hidden">
                             {selectImg && (
                                 <Image
-                                    src={selectImg}
+                                    src={`${process.env.NEXT_PUBLIC_CLOUD_DOMAIN}/${process.env.NEXT_PUBLIC_CLOUD_NAME}/image/upload/${selectImg}.jpg`}
                                     alt="Product Main"
                                     className="w-full h-96 object-contain"
                                     width={800}
@@ -476,7 +476,7 @@ export default function DetailAuction() {
                                     className={`cursor-pointer flex-shrink-0 w-20 h-20 rounded-md overflow-hidden border-2 ${selectImg === img ? 'border-blue-500' : 'border-transparent'}`}
                                 >
                                     <Image
-                                        src={img}
+                                        src={`${process.env.NEXT_PUBLIC_CLOUD_DOMAIN}/${process.env.NEXT_PUBLIC_CLOUD_NAME}/image/upload/${img}.jpg`}
                                         width={80}
                                         height={80}
                                         alt="Thumbnail"
