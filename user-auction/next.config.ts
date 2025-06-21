@@ -9,7 +9,7 @@ const nextConfig: NextConfig = {
     return config;
   },
   images: {
-    domains: ["lh3.googleusercontent.com", "localhost", "auction-backend-production-2602.up.railway.app",],
+    domains: ["lh3.googleusercontent.com", "localhost", "auction-backend-production-2602.up.railway.app","res.cloudinary.com"],
   },
 
 };
