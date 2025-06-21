@@ -153,7 +153,7 @@ export default function PaymentModal({
                 </button>
                 <div className="p-8">
                     <div className="flex items-center gap-4 mb-3">
-                        <img src={item.image ? `${process.env.NEXT_PUBLIC_CLOUD_DOMAIN}/${process.env.NEXT_PUBLIC_CLOUD_NAME}/image/upload/${itemDetail.image}.jpg` : "/fallback-image.jpg"} alt={item.name} className="w-15 h-15 object-cover rounded-lg" />
+                        <img src={item.image ? `${process.env.NEXT_PUBLIC_CLOUD_DOMAIN}/${process.env.NEXT_PUBLIC_CLOUD_NAME}/image/upload/${item.image}.jpg` : "/fallback-image.jpg"} alt={item.name} className="w-15 h-15 object-cover rounded-lg" />
                         <div>
                             <h2 className="text-xl font-bold text-gray-800 mb-2">
                                 Complete Purchase
