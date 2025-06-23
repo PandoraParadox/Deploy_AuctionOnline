@@ -4,13 +4,20 @@ import AppNavbar from "@/component/navbar/AppNavbar";
 import Rare from "../../icon/radiohead-in-rainbows-1_e0ff70e1-10bc-4ac1-bcf1-2b1046771130.webp";
 import Rolex from "../../icon/191.webp";
 import Camera from "../../icon/kpeso8y4r3n21.jpg";
+import Geo from "../../icon/Geometric.webp";
+import Krater from "../../icon/Krater.webp";
+import Club from "../../icon/ClubDrau.webp";
+import Mc from "../../icon/McLaren.jpg";
+import Widing from "../../icon/Winding.jpg";
+import Richart from "../../icon/RichardMile.webp";
+import Lana from "../../icon/LanaMarks.webp";
 import Image from "next/image";
 import { IncreaseIcon, ShieldIcon, AuctionIcon, BadgeIcon } from "@/icon";
 import { Gavel, UsersRound, Medal, ShieldCheck } from 'lucide-react';
 
 
 export default function AppHeader() {
-    const images = [Rare.src, Rolex.src, Camera.src];
+    const images = [Rare.src, Rolex.src, Camera.src, Geo.src, Krater.src, Club.src, Mc.src, Widing.src, Richart.src, Lana.src];
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isPaused, setIsPaused] = useState(false);
 

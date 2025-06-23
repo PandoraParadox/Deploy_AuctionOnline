@@ -6,7 +6,7 @@ import Link from "next/link";
 import DetailModal from "../detailmodal/DetailModal";
 import PaymentModal from "../paymentmodal/PaymentModal";
 import { useAuth } from "@/component/auth/authContext";
-
+import React, { useRef } from "react";
 interface WonItem {
     id: number;
     productID: number;
@@ -27,6 +27,20 @@ export default function Items() {
     const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
     const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
     const [loading, setLoading] = useState(true);
+
+    const scrollRef = useRef<HTMLDivElement | null>(null);
+
+    const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
+        const el = scrollRef.current;
+        if (!el) return;
+        if (
+            (e.deltaY > 0 && el.scrollLeft + el.clientWidth < el.scrollWidth) ||
+            (e.deltaY < 0 && el.scrollLeft > 0)
+        ) {
+            e.preventDefault();
+            el.scrollLeft += e.deltaY;
+        }
+    };
 
     useEffect(() => {
         if (!user) {
@@ -117,7 +131,12 @@ export default function Items() {
                 </div>
             </div>
 
-            <div className="overflow-x-auto flex gap-15 mt-10 h-[500px] mx-auto pt-[20px] px-[20px]">
+            <div
+                ref={scrollRef}
+                onWheel={handleWheel}
+                className="overflow-x-auto flex gap-15 mt-10 h-[500px] mx-auto pt-[20px] px-[20px] scroll-smooth"
+            >
+
                 {items.length === 0 ? (
                     <div className="text-center w-full">No won items found.</div>
                 ) : (
@@ -128,7 +147,7 @@ export default function Items() {
                         >
                             <div className="w-full h-[45%] relative mb-2">
                                 <Image
-                                    src={item.image ? `${process.env.NEXT_PUBLIC_APP_API_URL}/uploads/${item.image}` : "/fallback-image.jpg"}
+                                    src={item.image ? `${process.env.NEXT_PUBLIC_CLOUD_DOMAIN}/${process.env.NEXT_PUBLIC_CLOUD_NAME}/image/upload/${item.image}` : "/fallback-image.jpg"}
                                     width={200}
                                     height={200}
                                     alt={item.name}
