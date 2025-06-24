@@ -54,7 +54,6 @@ export default function DetailAuction() {
         try {
             if (user) {
                 const token = await user.getIdToken(true);
-                console.log("ID Token:", token);
                 return token;
             }
             console.warn("No user to get token");
@@ -398,6 +397,12 @@ export default function DetailAuction() {
                     token,
                 })
             );
+            console.log("Sending transaction with:", {
+                user_id: user.uid,
+                type: 'Bids',
+                amount: bidAmount,
+                description: `Bidding item : ${product?.name}`,
+            });
             const data = await fetch(`${process.env.NEXT_PUBLIC_APP_API_URL}/api/v1/wallet/transaction`, {
                 method: "POST",
                 headers: {
@@ -414,6 +419,7 @@ export default function DetailAuction() {
 
             if (!data.ok) {
                 const error = await data.json().catch(() => ({}));
+                console.error("Transaction error response:", error);
                 throw new Error(error || data.status);
             }
 
