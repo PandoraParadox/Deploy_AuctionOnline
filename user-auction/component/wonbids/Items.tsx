@@ -143,7 +143,7 @@ export default function Items() {
                     items.map((item) => (
                         <div
                             key={item.id}
-                            className="min-w-[316px] rounded-2xl bg-white h-[400px] shadow-2xl hover:scale-105 duration-300"
+                            className="w-[316px] rounded-2xl bg-white h-[400px] shadow-2xl hover:scale-105 duration-300"
                         >
                             <div className="w-full h-[45%] relative mb-2">
                                 <Image
